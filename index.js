@@ -25,7 +25,7 @@ const bot = new TelegramBot(token, { polling: true });
 bot.onText(/\/start/, (msg) => {
   // listens for "/start" and responds with the greeting below.
   bot.sendMessage(msg.chat.id,
-    "Hey, I'm the Deepa Quote Bot, I send motivational quotes similar to what Deepa says in real life !!");
+    "Hey, I'm the Deepa Quote Bot, I send motivational quotes similar to the ones Deepa uses in her life !!\n In order to see me in action please click the following link, \"/deepa_motivate_me\"");
 });
 
 app.get('/generate', async function(req, res) {
@@ -59,38 +59,28 @@ app.get('/generate', async function(req, res) {
 
 // Listener (handler) for telegram's /motivate_me event
 bot.onText(/\/deepa_motivate_me/, (msg, match) => {
-  bot.on("polling_error", console.log);
   const chatId = process.env.GROUP_CHAT_ID;
 
   var download = function(uri, filename, callback) {
     request.head(uri, function(err, res, body) {
-      console.log('content-type:', res.headers['content-type']);
-      console.log('content-length:', res.headers['content-length']);
-
       request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
     });
   };
 
   download(process.env.SERVER_URL, 'generate.png', function() {
 
-    bot.sendPhoto(chatId, 'generate.png', { caption: "Good Morning folks, Here's your daily morning motivation. If you need more motivation today, please click the following link \"/deepa_motivate_me\"" })
-    console.log('done');
+    bot.sendPhoto(chatId, 'generate.png', { caption: "If you need more motivation, please click the following link \"/deepa_motivate_me\"" })
   });
 
 });
 
 
 // Creating a cron job which runs on every 1 minute (*/1 * * * *)
-cron.schedule("33 15 * * *", function() {
-
-  bot.on("polling_error", console.log);
+cron.schedule("0 9 * * *", function() {
   const chatId = process.env.GROUP_CHAT_ID;
 
   var download = function(uri, filename, callback) {
     request.head(uri, function(err, res, body) {
-      console.log('content-type:', res.headers['content-type']);
-      console.log('content-length:', res.headers['content-length']);
-
       request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
     });
   };
@@ -98,7 +88,6 @@ cron.schedule("33 15 * * *", function() {
   download(process.env.SERVER_URL, 'generate.png', function() {
 
     bot.sendPhoto(chatId, 'generate.png', { caption: "Good Morning folks, Here's your daily morning motivation. If you need more motivation today, please click the following link \"/deepa_motivate_me\"" })
-    console.log('done');
   });
 },
   {
