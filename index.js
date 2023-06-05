@@ -3,7 +3,8 @@ const fs = require('fs');
 const {createCanvas, loadImage, registerFont} = require('canvas');
 const CanvasTextWrapper = require('canvas-text-wrapper').CanvasTextWrapper;
 const request = require('request-promise');
-const express = require('express');
+const express = require("express");
+const cron = require("node-cron");
 
 const app = express();
 
@@ -28,7 +29,7 @@ bot.sendMessage(msg.chat.id,
 app.get('/generate', async function (req, res) {
   console.log(req.query);
 
-  let quote = await request('https://api.quotable.io/random', {json: true});
+  let quote = await request('https://api.quotable.io/random?tags=famous-quotes,inspirational', {json: true});
 
   let resolutions = [[1080, 1080], [1080, 608], [1920, 1080]];
   let pair = req.query.width && req.query.height ? [Number.parseInt(req.query.width), Number.parseInt(req.query.height)] : resolutions[Math.floor(Math.random() * resolutions.length)];
@@ -75,6 +76,34 @@ bot.onText(/\/deepa_motivate_me/, (msg, match) => {
   });
   
   });
+  
+  
+// Creating a cron job which runs on every 1 minute (*/1 * * * *)
+cron.schedule("15 15 * * *", function() {
+  
+bot.on("polling_error", console.log);
+  const chatId = process.env.GROUP_CHAT_ID;
+
+  var download = function(uri, filename, callback){
+    request.head(uri, function(err, res, body){
+      console.log('content-type:', res.headers['content-type']);
+      console.log('content-length:', res.headers['content-length']);
+  
+      request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+    });
+  };
+  
+  download(process.env.SERVER_URL, 'generate.png', function(){
+
+    bot.sendPhoto(chatId, 'generate.png', {caption: "Good Morning folks, Here's your daily morning motivation. If you need more motivation today, please click the following link \"/deepa_motivate_me\""})
+    console.log('done');
+  });
+},
+{
+   scheduled: true,
+   timezone: "America/Los_Angeles"
+});
+  
 
 app.listen(3000, () => {
     console.log('Listening on port 3000');
