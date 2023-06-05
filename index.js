@@ -31,7 +31,7 @@ bot.onText(/\/start/, (msg) => {
 app.get('/generate', async function(req, res) {
   console.log(req.query);
 
-  let quote = await request('https://api.quotable.io/random?tags=famous-quotes,inspirational', { json: true });
+  let quote = await request('https://api.quotable.io/random?tags=inspirational', { json: true });
 
   let resolutions = [[1080, 1080], [1080, 608], [1920, 1080]];
   let pair = req.query.width && req.query.height ? [Number.parseInt(req.query.width), Number.parseInt(req.query.height)] : resolutions[Math.floor(Math.random() * resolutions.length)];
