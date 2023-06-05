@@ -59,7 +59,7 @@ app.get('/generate', async function(req, res) {
 
 // Listener (handler) for telegram's /motivate_me event
 bot.onText(/\/deepa_motivate_me/, (msg, match) => {
-  const chatId = process.env.GROUP_CHAT_ID;
+  const chatId = msg.chat.id;
 
   var download = function(uri, filename, callback) {
     request.head(uri, function(err, res, body) {
