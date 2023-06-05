@@ -81,7 +81,7 @@ bot.onText(/\/deepa_motivate_me/, (msg, match) => {
 
 
 // Creating a cron job which runs on every 1 minute (*/1 * * * *)
-cron.schedule("15 15 * * *", function() {
+cron.schedule("33 15 * * *", function() {
 
   bot.on("polling_error", console.log);
   const chatId = process.env.GROUP_CHAT_ID;
