@@ -8,7 +8,7 @@ const express = require('express');
 const app = express();
 
 app.get('/', (req, res) => {
-  res.send('Check code and docs at: https://github.com/TasosY2K/quote-image-api');
+  res.send('I\'m running');
 });
 
 // grabs the environment variable
@@ -46,7 +46,7 @@ app.get('/generate', async function (req, res) {
 
     ctx.globalCompositeOperation = req.query.invert && Boolean.valueOf(req.query.invert) ? 'difference' : 'normal';
 
-    CanvasTextWrapper(canvas, quote.content, {font: `60px ${font}`, textAlign: 'center', verticalAlign: 'middle', strokeText: true, paddingX: 100});
+    CanvasTextWrapper(canvas, quote.content + "\n - Deepa Paul", {font: `60px ${font}`, textAlign: 'center', verticalAlign: 'middle', strokeText: true, paddingX: 100});
 
     let stream = canvas.createJPEGStream({quality: 0.95, chromaSubsampling: false});
 
@@ -70,12 +70,12 @@ bot.onText(/\/motivate_me/, (msg, match) => {
   
   download('https://deepaquotebot.sanjay3291.repl.co/generate', 'generate.png', function(){
 
-    bot.sendPhoto(msg.chat.id, 'generate.png')
+    bot.sendPhoto(msg.chat.id, 'generate.png', {caption: "If you need more motivation from me, please ask me via @deepa_quote_bot /motivate_me"})
     console.log('done');
   });
   
   });
 
 app.listen(3000, () => {
-    console.log('Listening on port 3000\nCheck code and docs at: https://github.com/TasosY2K/quote-image-api');
+    console.log('Listening on port 3000');
 });
