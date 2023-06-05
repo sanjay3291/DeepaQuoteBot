@@ -55,9 +55,9 @@ app.get('/generate', async function (req, res) {
 });
 
 // Listener (handler) for telegram's /motivate_me event
-bot.onText(/\/motivate_me/, (msg, match) => {
+bot.onText(/\/deepa_motivate_me/, (msg, match) => {
   bot.on("polling_error", console.log);
-  const chatId = msg.chat.id;
+  const chatId = process.env.GROUP_CHAT_ID;
 
   var download = function(uri, filename, callback){
     request.head(uri, function(err, res, body){
@@ -68,9 +68,9 @@ bot.onText(/\/motivate_me/, (msg, match) => {
     });
   };
   
-  download('https://deepaquotebot.sanjay3291.repl.co/generate', 'generate.png', function(){
+  download(process.env.SERVER_URL, 'generate.png', function(){
 
-    bot.sendPhoto(msg.chat.id, 'generate.png', {caption: "If you need more motivation from me, please ask me via @deepa_quote_bot /motivate_me"})
+    bot.sendPhoto(chatId, 'generate.png', {caption: "Good Morning folks, Here's your daily morning motivation. If you need more motivation today, please click the following link \"/deepa_motivate_me\""})
     console.log('done');
   });
   
