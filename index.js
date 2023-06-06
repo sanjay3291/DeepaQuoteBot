@@ -29,7 +29,6 @@ bot.onText(/\/start/, (msg) => {
 });
 
 app.get('/generate', async function(req, res) {
-  console.log(req.query);
 
   let quote = await request('https://api.quotable.io/random?tags=inspirational', { json: true });
 
