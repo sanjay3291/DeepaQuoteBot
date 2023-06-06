@@ -73,6 +73,16 @@ bot.onText(/\/deepa_motivate_me/, (msg, match) => {
 
 });
 
+bot.on('message', async (msg) => {
+
+  const randAge = Math.floor(Math.random() * 60) + 2;
+
+  if (msg.text.indexOf('age') > -1 || msg.text.indexOf('Age') > -1) {
+    bot.sendMessage(msg.chat.id,`Age is just a number, but today I feel ${randAge} years old`,{reply_to_message_id: msg.message_id})
+  }
+  
+})
+
 
 // Creating a cron job which runs on every 1 minute (*/1 * * * *)
 cron.schedule("0 9 * * *", function() {
