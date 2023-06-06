@@ -91,6 +91,37 @@ bot.onText(/^(.*?(\bAge\b)[^$]*)$/, async (msg) => {
   
 })
 
+bot.onText(/^(.*?(\bDiet\b)[^$]*)$/, async (msg) => {
+
+  items = ['cookie', 'ice cream', 'milk shake', 'brownie'];
+
+  var item = items[Math.floor(Math.random()*items.length)];
+
+  bot.sendMessage(msg.chat.id,`A balanced diet is a ${item} in each hand.\n -Deepa Paul`,{reply_to_message_id: msg.message_id})
+  
+})
+
+bot.onText(/^(.*?(\bdiet\b)[^$]*)$/, async (msg) => {
+
+  items = ['cookie', 'ice cream', 'milk shake', 'brownie'];
+
+  var item = items[Math.floor(Math.random()*items.length)];
+
+  bot.sendMessage(msg.chat.id,`A balanced diet is a ${item} in each hand.\n -Deepa Paul`,{reply_to_message_id: msg.message_id})
+  
+})
+
+bot.onText(/^(.*?(\btruth\b)[^$]*)$/, async (msg) => {
+
+  bot.sendMessage(msg.chat.id,`Sach tho kadva hi hotha hai lekin bolna tho padtha hai.`,{reply_to_message_id: msg.message_id})
+  
+})
+
+bot.onText(/^(.*?(\bTruth\b)[^$]*)$/, async (msg) => {
+
+  bot.sendMessage(msg.chat.id,`Sach tho kadva hi hotha hai lekin bolna tho padtha hai.`,{reply_to_message_id: msg.message_id})
+  
+})
 
 // Creating a cron job which runs on every 1 minute (*/1 * * * *)
 cron.schedule("0 9 * * *", function() {
