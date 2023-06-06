@@ -73,13 +73,21 @@ bot.onText(/\/deepa_motivate_me/, (msg, match) => {
 
 });
 
-bot.on('message', async (msg) => {
+bot.onText(/^(.*?(\bage\b)[^$]*)$/, async (msg) => {
 
   const randAge = Math.floor(Math.random() * 60) + 2;
 
-  if (msg.text.indexOf('age') > -1 || msg.text.indexOf('Age') > -1) {
-    bot.sendMessage(msg.chat.id,`Age is just a number, but today I feel ${randAge} years old`,{reply_to_message_id: msg.message_id})
-  }
+  bot.sendMessage(msg.chat.id,`Age is just a number, but today I feel ${randAge} years old`,{reply_to_message_id: msg.message_id})
+
+  
+})
+
+bot.onText(/^(.*?(\bAge\b)[^$]*)$/, async (msg) => {
+
+  const randAge = Math.floor(Math.random() * 60) + 2;
+
+  bot.sendMessage(msg.chat.id,`Age is just a number, but today I feel ${randAge} years old`,{reply_to_message_id: msg.message_id})
+
   
 })
 
